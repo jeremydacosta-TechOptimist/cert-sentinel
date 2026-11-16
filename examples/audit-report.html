@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>cert-sentinel audit</title>
+<style>
+:root { color-scheme: dark; }
+* { box-sizing: border-box; }
+body {
+  margin: 0; padding: 24px;
+  background: #0b1220; color: #dbe4f0;
+  font: 14px/1.5 "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+header { margin-bottom: 20px; }
+h1 { margin: 0; font-size: 24px; color: #f8fbff; letter-spacing: 0.02em; }
+h2 { margin: 0 0 10px; font-size: 15px; color: #9fb3cc; text-transform: uppercase; letter-spacing: 0.08em; }
+p.subtitle { margin: 2px 0 0; color: #8da2bd; }
+p.meta { margin: 8px 0 0; color: #8da2bd; font-size: 13px; }
+section { background: #111c30; border: 1px solid #22334d; border-radius: 8px; padding: 16px; margin-bottom: 18px; overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid #1d2c44; vertical-align: top; }
+th { color: #94a9c4; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; }
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:hover { background: #16253d; }
+.cards { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 18px; }
+.card { background: #111c30; border: 1px solid #22334d; border-radius: 8px; padding: 12px 18px; min-width: 120px; }
+.card .value { display: block; font-size: 24px; font-weight: 600; color: #f8fbff; }
+.card .label { color: #8da2bd; font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; }
+.badge { border-radius: 4px; padding: 1px 7px; font-size: 12px; font-weight: 600; }
+.error { background: #4a1f25; color: #ff9a9a; }
+.warning { background: #4a3a1a; color: #ffce7a; }
+.notice { background: #1c3a4a; color: #7fd4f5; }
+.info { background: #1c3a2a; color: #7fe0a8; }
+.muted { color: #6f829c; }
+code { background: #1b2b45; border-radius: 4px; padding: 1px 5px; color: #cfe0f5; }
+footer { color: #6f829c; font-size: 12px; margin-top: 22px; }
+</style>
+</head>
+<body>
+<header>
+<h1>cert-sentinel</h1>
+<p class="subtitle">X.509 certificate inventory and expiry audit</p>
+<p class="meta">Generated 2026-11-16 17:41 UTC &middot; 8 certificate(s) &middot; 9 finding(s)</p>
+</header>
+<div class="cards">
+<div class="card"><span class="value">8</span><span class="label">certificates</span></div>
+<div class="card"><span class="value error">1</span><span class="label">error</span></div>
+<div class="card"><span class="value warning">3</span><span class="label">warning</span></div>
+<div class="card"><span class="value notice">3</span><span class="label">notice</span></div>
+<div class="card"><span class="value info">2</span><span class="label">info</span></div>
+</div>
+<section id="findings">
+<h2>Findings</h2>
+<table>
+<thead><tr><th>Severity</th><th>Rule</th><th>Certificate</th><th>Fingerprint</th><th>Message</th></tr></thead>
+<tbody>
+<tr><td><span class="badge error">error</span></td><td>CERT-SMALL-RSA-KEY</td><td>legacy-rsa.example</td><td><code>c8dc2a4f59fd73c3</code></td><td>RSA key is 1024 bits, below the 2048-bit minimum</td></tr>
+<tr><td><span class="badge warning">warning</span></td><td>CERT-DUPLICATE</td><td>srv-a.example</td><td><code>6d7b2006989eca1e</code></td><td>duplicate certificate also loaded from examples/pki/leaf-server.pem</td></tr>
+<tr><td><span class="badge warning">warning</span></td><td>CERT-EXPIRING</td><td>srv-b.example</td><td><code>85321b8e975c3a50</code></td><td>certificate expires in 19 day(s) on 2026-12-06 17:32 UTC</td></tr>
+<tr><td><span class="badge warning">warning</span></td><td>CERT-WEAK-HASH</td><td>legacy-sha1.example</td><td><code>7d506deabb7facf4</code></td><td>signature uses SHA-1 (sha1WithRSAEncryption)</td></tr>
+<tr><td><span class="badge notice">notice</span></td><td>CERT-LONG-VALIDITY</td><td>NetWatch Lab Intermediate CA</td><td><code>99681527baaeb9ed</code></td><td>validity is 1825 days, above the 398-day browser limit</td></tr>
+<tr><td><span class="badge notice">notice</span></td><td>CERT-LONG-VALIDITY</td><td>NetWatch Lab Root CA</td><td><code>226f9ba10db23916</code></td><td>validity is 3650 days, above the 398-day browser limit</td></tr>
+<tr><td><span class="badge notice">notice</span></td><td>CERT-SELF-SIGNED</td><td>selfie.example</td><td><code>52ba2279a74f9c7e</code></td><td>certificate is self-signed (subject equals issuer and no CA constraint)</td></tr>
+<tr><td><span class="badge info">info</span></td><td>CERT-CA-CERT</td><td>NetWatch Lab Intermediate CA</td><td><code>99681527baaeb9ed</code></td><td>certificate is a CA (pathLenConstraint 0)</td></tr>
+<tr><td><span class="badge info">info</span></td><td>CERT-CA-CERT</td><td>NetWatch Lab Root CA</td><td><code>226f9ba10db23916</code></td><td>certificate is a CA (pathLenConstraint 1)</td></tr>
+</tbody>
+</table>
+</section>
+<section id="certificates">
+<h2>Certificate inventory</h2>
+<table>
+<thead><tr><th>Subject</th><th>Issuer</th><th>Not before</th><th>Not after</th><th>Key</th><th>Signature</th><th>Subject alternative names</th><th>Source</th></tr></thead>
+<tbody>
+<tr><td>C=PT, O=NetWatch Lab, CN=NetWatch Lab Intermediate CA</td><td>C=PT, O=NetWatch Lab, CN=NetWatch Lab Root CA</td><td>2026-11-16 17:32 UTC</td><td>2031-11-15 17:32 UTC</td><td>RSA 2048</td><td>sha256WithRSAEncryption</td><td>-</td><td>examples/pki/intermediate-ca.pem</td></tr>
+<tr><td>C=PT, O=NetWatch Lab, CN=srv-b.example</td><td>C=PT, O=NetWatch Lab, CN=NetWatch Lab Intermediate CA</td><td>2026-11-16 17:32 UTC</td><td>2026-12-06 17:32 UTC</td><td>RSA 2048</td><td>sha256WithRSAEncryption</td><td>DNS:srv-b.example</td><td>examples/pki/leaf-expiring-soon.pem</td></tr>
+<tr><td>C=PT, O=NetWatch Lab, CN=selfie.example</td><td>C=PT, O=NetWatch Lab, CN=selfie.example</td><td>2026-11-16 17:32 UTC</td><td>2027-11-16 17:32 UTC</td><td>RSA 2048</td><td>sha256WithRSAEncryption</td><td>DNS:selfie.example</td><td>examples/pki/leaf-self-signed.pem</td></tr>
+<tr><td>C=PT, O=NetWatch Lab, CN=srv-a.example</td><td>C=PT, O=NetWatch Lab, CN=NetWatch Lab Intermediate CA</td><td>2026-11-16 17:32 UTC</td><td>2027-11-16 17:32 UTC</td><td>RSA 2048</td><td>sha256WithRSAEncryption</td><td>DNS:srv-a.example, IP:192.0.2.10, email:admin@example, URI:https://srv-a.example/</td><td>examples/pki/leaf-server.pem</td></tr>
+<tr><td>C=PT, O=NetWatch Lab, CN=legacy-sha1.example</td><td>C=PT, O=NetWatch Lab, CN=NetWatch Lab Intermediate CA</td><td>2026-11-16 17:32 UTC</td><td>2027-11-16 17:32 UTC</td><td>RSA 2048</td><td>sha1WithRSAEncryption</td><td>DNS:legacy-sha1.example</td><td>examples/pki/leaf-sha1.pem</td></tr>
+<tr><td>C=PT, O=NetWatch Lab, CN=legacy-rsa.example</td><td>C=PT, O=NetWatch Lab, CN=NetWatch Lab Intermediate CA</td><td>2026-11-16 17:32 UTC</td><td>2027-11-16 17:32 UTC</td><td>RSA 1024</td><td>sha256WithRSAEncryption</td><td>DNS:legacy-rsa.example</td><td>examples/pki/leaf-small-key.pem</td></tr>
+<tr><td>C=PT, O=NetWatch Lab, CN=srv-a.example</td><td>C=PT, O=NetWatch Lab, CN=NetWatch Lab Intermediate CA</td><td>2026-11-16 17:32 UTC</td><td>2027-11-16 17:32 UTC</td><td>RSA 2048</td><td>sha256WithRSAEncryption</td><td>DNS:srv-a.example, IP:192.0.2.10, email:admin@example, URI:https://srv-a.example/</td><td>examples/pki/leaf.der</td></tr>
+<tr><td>C=PT, O=NetWatch Lab, CN=NetWatch Lab Root CA</td><td>C=PT, O=NetWatch Lab, CN=NetWatch Lab Root CA</td><td>2026-11-16 17:32 UTC</td><td>2036-11-13 17:32 UTC</td><td>RSA 2048</td><td>sha256WithRSAEncryption</td><td>-</td><td>examples/pki/root-ca.pem</td></tr>
+</tbody>
+</table>
+</section>
+<footer>cert-sentinel &middot; offline X.509 inventory and expiry audit &middot; no external assets</footer>
+</body>
+</html>
